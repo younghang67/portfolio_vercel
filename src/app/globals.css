@@ -2,11 +2,6 @@
 @import "tw-animate-css";
 @custom-variant dark (&:where(.dark, .dark *));
 
-html.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -65,7 +60,7 @@ body {
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
+  --muted: oklch(51.028% 0.00006 271.152);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
@@ -86,6 +81,8 @@ body {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --dot-color: #000000;
+  --social-bg: #00eeff07;
 }
 
 .dark {
@@ -99,7 +96,7 @@ body {
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+  --muted: oklch(82.032% 0.00009 271.152);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
@@ -120,18 +117,63 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --dot-color: #ffffff;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    cursor: none;
   }
   body {
     @apply bg-background text-foreground;
+    cursor: none;
   }
 }
+.max-wid {
+  max-width: 800px;
+  margin-inline: auto;
+  padding-inline: 12px;
+}
 .dotbg {
-  --pattern-foreground: color-mix(in oklab, #ffffff 5%, transparent);
+  --pattern-foreground: color-mix(in oklab, var(--dot-color) 5%, transparent);
   background-image: radial-gradient(var(--pattern-foreground) 1px, transparent 0);
   background-size: 12px 12px;
+}
+.aboutme-list li {
+  position: relative;
+  padding-left: 4px;
+}
+.aboutme-list li a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+}
+.aboutme-list li a:hover::after {
+  height: 1px;
+}
+.aboutme-list li::before {
+  content: "";
+  width: 16px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  background-color: var(--border);
+}
+.socials-links {
+  padding: 20px 8px;
+  border-radius: 6px;
+  background-color: var(--social-bg);
+  transition: color 150ms ease-in-out;
+}
+
+.socials-links:hover {
+  background-color: #00eeff0e;
+}
+.socials-links:hover h4 {
+  text-decoration: underline;
 }
