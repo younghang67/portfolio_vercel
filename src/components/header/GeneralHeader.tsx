@@ -5,7 +5,7 @@ import Image from "next/image";
 import ThemeToggle from "../utils/ThemeToggle";
 
 const navLinks = [
-  { label: "Home", href: "/" },
+  { label: "Home", href: "#hero" },
   { label: "About me", href: "#about" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
@@ -59,7 +59,7 @@ export default function GeneralHeader() {
       }`}>
       <div className="container mx-auto max-w-7xl px-4 h-16 flex items-center justify-between gap-4">
         {/* Logo */}
-        <a href="/" aria-label="Go to top" className="shrink-0">
+        <a href="#hero" aria-label="Go to top" className="shrink-0">
           {/* dark mode image */}
           <Image src="/logo/dark-logo-160x160.png" alt="Logo" width={40} height={40} className="hidden dark:block" />
           {/* light mode image */}

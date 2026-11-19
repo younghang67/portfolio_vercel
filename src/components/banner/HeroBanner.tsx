@@ -5,7 +5,7 @@ const techStack = ["Next.js", "React", "TypeScript", "Node.js", "Tailwind CSS"];
 
 export default function HeroBanner() {
   return (
-    <section className="dotbg px-4 py-20 md:py-28">
+    <section id="hero" className="dotbg px-4 py-20 md:py-28">
       <div className="container mx-auto flex flex-col items-center text-center gap-6">
         {/* Status pill */}
         <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 dark:border-gray-700 bg-white/60 dark:bg-gray-900/60 backdrop-blur px-4 py-1.5 text-xs font-semibold uppercase tracking-wider">
