@@ -1,36 +1,135 @@
-import ThemeToggle from "../utils/ThemeToggle";
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import ThemeToggle from "../utils/ThemeToggle";
+
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "About me", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+];
 
 export default function GeneralHeader() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("#home");
+
+  // Add a shadow/border once the page has scrolled
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Highlight the link of the section currently in view
+  useEffect(() => {
+    const sections = navLinks.map((link) => document.getElementById(link.href.slice(1))).filter((el): el is HTMLElement => el !== null);
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        });
+      },
+      // a section counts as "current" when it crosses the middle band of the screen
+      { rootMargin: "-40% 0px -55% 0px" },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  // Close the mobile menu with Escape
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
   return (
-    <header className="px-4 py-6 dotbg">
-      <div className="container mx-auto flex justify-between items-center">
-        <div>
+    <header
+      className={`sticky top-0 z-10 border-b backdrop-blur-md transition-all duration-300 bg-white/70 dark:bg-gray-950/70 ${
+        scrolled ? "border-gray-300 dark:border-gray-800 shadow-sm" : "border-transparent"
+      }`}>
+      <div className="container mx-auto max-w-7xl px-4 h-16 flex items-center justify-between gap-4">
+        {/* Logo */}
+        <a href="/" aria-label="Go to top" className="shrink-0">
           {/* dark mode image */}
-          <Image src="/logo/dark-logo-160x160.png" alt="Logo" width={40} height={40} className="dark:block hidden" />
+          <Image src="/logo/dark-logo-160x160.png" alt="Logo" width={40} height={40} className="hidden dark:block" />
           {/* light mode image */}
-          <Image src="/logo/light-logo-160x160.png" alt="Logo" width={40} height={40} className="dark:hidden block" />
+          <Image src="/logo/light-logo-160x160.png" alt="Logo" width={40} height={40} className="block dark:hidden" />
+        </a>
+
+        {/* Desktop nav */}
+        <nav aria-label="Main" className="hidden md:block">
+          <ul className="flex items-center gap-1 rounded-full border border-gray-300 dark:border-gray-800 bg-white/60 dark:bg-gray-900/60 p-1">
+            {navLinks.map((link) => {
+              const isActive = active === link.href;
+              return (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    aria-current={isActive ? "location" : undefined}
+                    className={`block rounded-full px-4 py-1.5 text-sm font-semibold uppercase tracking-wide transition-colors duration-300 ${
+                      isActive
+                        ? "bg-black text-white dark:bg-white dark:text-black"
+                        : "opacity-70 hover:opacity-100 hover:bg-gray-200 dark:hover:bg-gray-800"
+                    }`}>
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        {/* Right side: theme toggle + hamburger */}
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 dark:border-gray-700 transition-colors hover:bg-gray-200 dark:hover:bg-gray-800">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+              {menuOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+            </svg>
+          </button>
         </div>
-        <div>
-          <nav>
-            <ul className="flex gap-8 uppercase font-semibold">
-              <li>
-                <a href="#">home</a>
-              </li>
-              <li>
-                <a href="#">qulafications</a>
-              </li>
-              <li>
-                <a href="#">projects</a>
-              </li>
-              <li>
-                <a href="#">about me</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <ThemeToggle />
       </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <nav id="mobile-menu" aria-label="Mobile" className="md:hidden border-t border-gray-300 dark:border-gray-800 px-4 py-4">
+          <ul className="container mx-auto max-w-7xl flex flex-col gap-1">
+            {navLinks.map((link) => {
+              const isActive = active === link.href;
+              return (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    aria-current={isActive ? "location" : undefined}
+                    className={`block rounded-xl px-4 py-3 font-semibold uppercase tracking-wide transition-colors ${
+                      isActive ? "bg-black text-white dark:bg-white dark:text-black" : "hover:bg-gray-200 dark:hover:bg-gray-800"
+                    }`}>
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }

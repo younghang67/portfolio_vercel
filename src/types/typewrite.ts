@@ -3,6 +3,8 @@ export interface TypewriterProps {
   speed?: number;
   deleteSpeed?: number;
   delay?: number;
+  pauseBetween?: number;
+  loop?: boolean;
   className?: string;
   cursor?: boolean;
 }
