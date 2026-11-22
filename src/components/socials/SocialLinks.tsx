@@ -30,7 +30,7 @@ const socials: Social[] = [
   {
     name: "Instagram",
     handle: "@rusanhang",
-    href: "https://www.instagram.com/rusanhang/",
+    href: "https://www.instagram.com/rusan_hang",
     iconLight: "/logo/Instagram-Black.png",
     iconDark: "/logo/instagram-white.png",
   },
@@ -45,7 +45,7 @@ const socials: Social[] = [
 
 export default function SocialLinks({ className }: SocialsProps) {
   return (
-    <section id="socials" className={`scroll-mt-16 ${className ?? ""}`}>
+    <section id="socials" className={`scroll-mt-16 px-4 ${className ?? ""}`}>
       <p className="uppercase font-semibold text-sm tracking-widest opacity-60 mb-2">Find me online</p>
       <h2 className="text-3xl md:text-4xl font-bold pb-6">Social Links</h2>
 
