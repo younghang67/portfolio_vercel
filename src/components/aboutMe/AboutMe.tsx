@@ -23,7 +23,7 @@ const links = [
 
 export default function AboutMe({ className }: AboutMeProps) {
   return (
-    <section id="about" className={`scroll-mt-16 ${className ?? ""}`}>
+    <section id="about" className={`scroll-mt-16 px-4 ${className ?? ""}`}>
       {/* Heading */}
       <p className="uppercase font-semibold text-sm tracking-widest opacity-60 mb-2">Who I am</p>
       <h2 className="text-3xl md:text-4xl font-bold">About Me</h2>

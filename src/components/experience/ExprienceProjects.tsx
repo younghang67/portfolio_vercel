@@ -36,16 +36,16 @@ const jobs: Job[] = [
 
 export default function Experience({ className }: ExperienceProps) {
   return (
-    <section id="experience" className={`scroll-mt-16 ${className ?? ""}`}>
+    <section id="experience" className={`scroll-mt-16 px-4 ${className ?? ""}`}>
       <p className="uppercase font-semibold text-sm tracking-widest opacity-60 mb-2">Where I've worked</p>
       <h2 className="text-3xl md:text-4xl font-bold pb-8">Experience</h2>
 
       {/* Timeline */}
-      <ol className="relative space-y-8 border-l-2 border-gray-300 dark:border-gray-800 pl-6 md:pl-8">
+      <ol className="relative space-y-8 sm:border-l-2 border-gray-300 dark:border-gray-800 sm:pl-6 md:pl-8">
         {jobs.map((job) => (
           <li key={job.company} className="relative">
             {/* Timeline dot */}
-            <span aria-hidden className="absolute -left-[calc(1.5rem+5px)] md:-left-[calc(2rem+5px)] top-8 flex h-2.5 w-2.5">
+            <span aria-hidden className="absolute -left-[calc(1.5rem+5px)] md:-left-[calc(2rem+5px)] top-8 sm:flex hidden h-2.5 w-2.5">
               {job.current && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />}
               <span className={`relative inline-flex h-2.5 w-2.5 rounded-full ${job.current ? "bg-green-500" : "bg-gray-500"}`} />
             </span>

@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import GeneralHeader from "../components/header/GeneralHeader";
 import GeneralFooter from "../components/footer/GeneralFooter";
 import CursorTracker from "@/components/ui/CursorTracker";
+import { SITE_URL } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,9 +16,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-const SITE_URL = "https://rusan-limbu.vercel.app/";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 
