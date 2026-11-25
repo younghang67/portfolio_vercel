@@ -43,6 +43,14 @@ export default function HeroBanner() {
           >
             Get in touch
           </a>
+          <a
+            href="/files/Rusan_Limbu_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border border-gray-400 px-6 py-3 text-sm font-semibold tracking-wide uppercase transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-200 dark:border-gray-600 dark:hover:bg-gray-800"
+          >
+            View Resume
+          </a>
         </div>
 
         {/* Tech chips */}
