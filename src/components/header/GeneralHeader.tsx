@@ -26,7 +26,9 @@ export default function GeneralHeader() {
 
   // Highlight the link of the section currently in view
   useEffect(() => {
-    const sections = navLinks.map((link) => document.getElementById(link.href.slice(1))).filter((el): el is HTMLElement => el !== null);
+    const sections = navLinks
+      .map((link) => document.getElementById(link.href.slice(1)))
+      .filter((el): el is HTMLElement => el !== null);
 
     if (sections.length === 0) return;
 
@@ -47,28 +49,44 @@ export default function GeneralHeader() {
   // Close the mobile menu with Escape
   useEffect(() => {
     if (!menuOpen) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    const onKey = (e: KeyboardEvent) =>
+      e.key === "Escape" && setMenuOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [menuOpen]);
 
   return (
     <header
-      className={`sticky top-0 z-10 border-b backdrop-blur-md transition-all duration-300 bg-white/70 dark:bg-gray-950/70 ${
-        scrolled ? "border-gray-300 dark:border-gray-800 shadow-sm" : "border-transparent"
-      }`}>
-      <div className="container mx-auto max-w-7xl px-4 h-16 flex items-center justify-between gap-4">
+      className={`sticky top-0 z-10 border-b bg-white/70 backdrop-blur-md transition-all duration-300 dark:bg-gray-950/70 ${
+        scrolled
+          ? "border-gray-300 shadow-sm dark:border-gray-800"
+          : "border-transparent"
+      }`}
+    >
+      <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
         {/* Logo */}
         <a href="#hero" aria-label="Go to top" className="shrink-0">
           {/* dark mode image */}
-          <Image src="/logo/dark-logo-160x160.png" alt="Logo" width={40} height={40} className="hidden dark:block" />
+          <Image
+            src="/logo/dark-logo-160x160.png"
+            alt="Logo"
+            width={40}
+            height={40}
+            className="hidden dark:block"
+          />
           {/* light mode image */}
-          <Image src="/logo/light-logo-160x160.png" alt="Logo" width={40} height={40} className="block dark:hidden" />
+          <Image
+            src="/logo/light-logo-160x160.png"
+            alt="Logo"
+            width={40}
+            height={40}
+            className="block dark:hidden"
+          />
         </a>
 
         {/* Desktop nav */}
         <nav aria-label="Main" className="hidden md:block">
-          <ul className="flex items-center gap-1 rounded-full border border-gray-300 dark:border-gray-800 bg-white/60 dark:bg-gray-900/60 p-1">
+          <ul className="flex items-center gap-1 rounded-full border border-gray-300 bg-white/60 p-1 dark:border-gray-800 dark:bg-gray-900/60">
             {navLinks.map((link) => {
               const isActive = active === link.href;
               return (
@@ -76,11 +94,12 @@ export default function GeneralHeader() {
                   <a
                     href={link.href}
                     aria-current={isActive ? "location" : undefined}
-                    className={`block rounded-full px-4 py-1.5 text-sm font-semibold uppercase tracking-wide transition-colors duration-300 ${
+                    className={`block rounded-full px-4 py-1.5 text-sm font-semibold tracking-wide uppercase transition-colors duration-300 ${
                       isActive
                         ? "bg-black text-white dark:bg-white dark:text-black"
-                        : "opacity-70 hover:opacity-100 hover:bg-gray-200 dark:hover:bg-gray-800"
-                    }`}>
+                        : "opacity-70 hover:bg-gray-200 hover:opacity-100 dark:hover:bg-gray-800"
+                    }`}
+                  >
                     {link.label}
                   </a>
                 </li>
@@ -99,9 +118,23 @@ export default function GeneralHeader() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 dark:border-gray-700 transition-colors hover:bg-gray-200 dark:hover:bg-gray-800">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
-              {menuOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 transition-colors hover:bg-gray-200 md:hidden dark:border-gray-700 dark:hover:bg-gray-800"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              aria-hidden
+            >
+              {menuOpen ? (
+                <path d="M6 6l12 12M18 6L6 18" />
+              ) : (
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              )}
             </svg>
           </button>
         </div>
@@ -109,8 +142,12 @@ export default function GeneralHeader() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <nav id="mobile-menu" aria-label="Mobile" className="md:hidden border-t border-gray-300 dark:border-gray-800 px-4 py-4">
-          <ul className="container mx-auto max-w-7xl flex flex-col gap-1">
+        <nav
+          id="mobile-menu"
+          aria-label="Mobile"
+          className="border-t border-gray-300 px-4 py-4 md:hidden dark:border-gray-800"
+        >
+          <ul className="container mx-auto flex max-w-7xl flex-col gap-1">
             {navLinks.map((link) => {
               const isActive = active === link.href;
               return (
@@ -119,9 +156,12 @@ export default function GeneralHeader() {
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
                     aria-current={isActive ? "location" : undefined}
-                    className={`block rounded-xl px-4 py-3 font-semibold uppercase tracking-wide transition-colors ${
-                      isActive ? "bg-black text-white dark:bg-white dark:text-black" : "hover:bg-gray-200 dark:hover:bg-gray-800"
-                    }`}>
+                    className={`block rounded-xl px-4 py-3 font-semibold tracking-wide uppercase transition-colors ${
+                      isActive
+                        ? "bg-black text-white dark:bg-white dark:text-black"
+                        : "hover:bg-gray-200 dark:hover:bg-gray-800"
+                    }`}
+                  >
                     {link.label}
                   </a>
                 </li>

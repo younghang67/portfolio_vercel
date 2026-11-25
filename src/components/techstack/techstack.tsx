@@ -3,7 +3,7 @@ import React from "react";
 export default function techstack() {
   return (
     <div>
-      <h2 className="text-3xl font-semibold pb-6">Stack</h2>
+      <h2 className="pb-6 text-3xl font-semibold">Stack</h2>
     </div>
   );
 }
