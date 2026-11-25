@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
-const INTERACTIVE_SELECTOR = 'a, button, [role="button"], input, textarea, select, label, summary, [data-cursor="hover"]';
+const INTERACTIVE_SELECTOR =
+  'a, button, [role="button"], input, textarea, select, label, summary, [data-cursor="hover"]';
 
 export default function CursorTracker() {
   const positionRef = useRef<HTMLDivElement>(null); // follows the mouse
@@ -18,7 +19,9 @@ export default function CursorTracker() {
     const glass = glassRef.current;
     if (!position || !scale || !glass) return;
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     const SIZE = 44;
     const EASE = reducedMotion ? 0.35 : 0.18;
 
@@ -60,7 +63,10 @@ export default function CursorTracker() {
 
       position.style.transform = `translate3d(${x - SIZE / 2}px, ${y - SIZE / 2}px, 0)`;
 
-      const settled = Math.abs(mouseX - x) < 0.1 && Math.abs(mouseY - y) < 0.1 && stretch < 0.002;
+      const settled =
+        Math.abs(mouseX - x) < 0.1 &&
+        Math.abs(mouseY - y) < 0.1 &&
+        stretch < 0.002;
       raf = settled ? null : requestAnimationFrame(tick);
     };
 
@@ -88,7 +94,9 @@ export default function CursorTracker() {
 
     const onOver = (e: MouseEvent) => {
       const target = e.target;
-      hovering = target instanceof Element && target.closest(INTERACTIVE_SELECTOR) !== null;
+      hovering =
+        target instanceof Element &&
+        target.closest(INTERACTIVE_SELECTOR) !== null;
       applyScale();
     };
 
@@ -129,8 +137,17 @@ export default function CursorTracker() {
   }, []);
 
   return (
-    <div ref={positionRef} aria-hidden className="pointer-events-none fixed left-0 top-0 z-[9999]" style={{ willChange: "transform" }}>
-      <div ref={scaleRef} className="glass-cursor-scale" style={{ transform: "scale(0)" }}>
+    <div
+      ref={positionRef}
+      aria-hidden
+      className="pointer-events-none fixed top-0 left-0 z-[9999]"
+      style={{ willChange: "transform" }}
+    >
+      <div
+        ref={scaleRef}
+        className="glass-cursor-scale"
+        style={{ transform: "scale(0)" }}
+      >
         <div ref={glassRef} className="glass-cursor" />
       </div>
     </div>

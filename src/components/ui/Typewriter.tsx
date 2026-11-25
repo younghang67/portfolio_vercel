@@ -69,10 +69,24 @@ export default function Typewriter({
     }
 
     return () => clearTimeout(timeout);
-  }, [phase, charIndex, currentText, isLast, loop, texts.length, speed, deleteSpeed, delay, pauseBetween, reducedMotion]);
+  }, [
+    phase,
+    charIndex,
+    currentText,
+    isLast,
+    loop,
+    texts.length,
+    speed,
+    deleteSpeed,
+    delay,
+    pauseBetween,
+    reducedMotion,
+  ]);
 
   // Reduced motion: show the first phrase, no animation
-  const visibleText = reducedMotion ? (texts[0] ?? "") : currentText.slice(0, charIndex);
+  const visibleText = reducedMotion
+    ? (texts[0] ?? "")
+    : currentText.slice(0, charIndex);
 
   return (
     <span className={className}>
@@ -81,7 +95,9 @@ export default function Typewriter({
 
       <span aria-hidden="true">
         {visibleText}
-        {cursor && !reducedMotion && <span className="ml-0.5 inline-block h-[1em] w-[2px] translate-y-[0.15em] bg-current animate-pulse" />}
+        {cursor && !reducedMotion && (
+          <span className="ml-0.5 inline-block h-[1em] w-[2px] translate-y-[0.15em] animate-pulse bg-current" />
+        )}
       </span>
     </span>
   );
